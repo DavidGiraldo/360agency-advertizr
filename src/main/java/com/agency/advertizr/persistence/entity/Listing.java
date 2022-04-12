@@ -4,45 +4,31 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "listings")
 public class Listing {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "dealer_id", insertable = false, updatable = false)
     private Dealer dealer;
-    @Enumerated(EnumType.STRING)
-    private ListingStatus status;
+    private String status = ListingStatus.DRAFT.status;
     private BigDecimal price;
     private String brand;
     private String reference;
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    private LocalDate createdAt = LocalDate.now();
     @Column(name = "updated_at")
-    private LocalDate updatedAt;
+    private LocalDate updatedAt = LocalDate.now();
 
     @OneToMany(mappedBy = "listingPublishing")
-    private List<PublishingRequest> publishingRequest;
+    private Set<PublishingRequest> publishingRequest;
 
     @OneToMany(mappedBy = "listingUnpublished")
-    private List<UnpublishingRequest> unpublishedRequest;
-
-    public Listing() {}
-
-    public Listing(Long id, Dealer dealer, ListingStatus status, BigDecimal price, String brand, String reference, LocalDate createdAt, LocalDate updatedAt) {
-        this.id = id;
-        this.dealer = dealer;
-        this.status = status;
-        this.price = price;
-        this.brand = brand;
-        this.reference = reference;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+    private Set<UnpublishingRequest> unpublishedRequest;
 
     public Long getId() {
         return id;
@@ -60,11 +46,11 @@ public class Listing {
         this.dealer = dealer;
     }
 
-    public ListingStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(ListingStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -108,4 +94,19 @@ public class Listing {
         this.updatedAt = updatedAt;
     }
 
+    public Set<PublishingRequest> getPublishingRequest() {
+        return publishingRequest;
+    }
+
+    public void setPublishingRequest(Set<PublishingRequest> publishingRequest) {
+        this.publishingRequest = publishingRequest;
+    }
+
+    public Set<UnpublishingRequest> getUnpublishedRequest() {
+        return unpublishedRequest;
+    }
+
+    public void setUnpublishedRequest(Set<UnpublishingRequest> unpublishedRequest) {
+        this.unpublishedRequest = unpublishedRequest;
+    }
 }

@@ -7,7 +7,6 @@ import java.util.List;
 @Entity
 @Table(name = "publishing_requests")
 public class PublishingRequest {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,24 +14,13 @@ public class PublishingRequest {
     private String message;
     private String response;
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    private LocalDate createdAt = LocalDate.now();
     @Column(name = "updated_at")
-    private LocalDate updatedAt;
+    private LocalDate updatedAt = LocalDate.now();
 
     @ManyToOne
     @JoinColumn(name = "listing_id", insertable = false, updatable = false)
-    private List<Listing> listingPublishing;
-
-    public PublishingRequest() {}
-
-    public PublishingRequest(Long id, String requester, String message, String response, LocalDate createdAt, LocalDate updatedAt) {
-        this.id = id;
-        this.requester = requester;
-        this.message = message;
-        this.response = response;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+    private Listing listingPublishing;
 
     public Long getId() {
         return id;
@@ -82,4 +70,11 @@ public class PublishingRequest {
         this.updatedAt = updatedAt;
     }
 
+    public Listing getListingPublishing() {
+        return listingPublishing;
+    }
+
+    public void setListingPublishing(Listing listingPublishing) {
+        this.listingPublishing = listingPublishing;
+    }
 }

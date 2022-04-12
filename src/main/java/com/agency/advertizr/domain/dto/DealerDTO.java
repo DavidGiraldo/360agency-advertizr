@@ -1,36 +1,17 @@
-package com.agency.advertizr.persistence.entity;
+package com.agency.advertizr.domain.dto;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
-@Entity
-@Table(name = "dealers")
-public class Dealer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class DealerDTO implements Serializable {
     private String name;
     private Integer tier;
     private String address;
     private String phone;
     private String email;
-    @Column(name = "created_at")
-    private LocalDate createdAt = LocalDate.now();
-    @Column(name = "updated_at")
-    private LocalDate updatedAt = LocalDate.now();
-
-    @OneToMany(mappedBy = "dealer")
-    private Set<Listing> listing;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Optional<LocalDate> createdAt;
+    private Optional<LocalDate> updatedAt;
 
     public String getName() {
         return name;
@@ -72,27 +53,19 @@ public class Dealer {
         this.email = email;
     }
 
-    public LocalDate getCreatedAt() {
+    public Optional<LocalDate> getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(Optional<LocalDate> createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDate getUpdatedAt() {
+    public Optional<LocalDate> getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
+    public void setUpdatedAt(Optional<LocalDate> updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Set<Listing> getListing() {
-        return listing;
-    }
-
-    public void setListing(Set<Listing> listing) {
-        this.listing = listing;
     }
 }

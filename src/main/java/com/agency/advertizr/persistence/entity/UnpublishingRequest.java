@@ -12,22 +12,13 @@ public class UnpublishingRequest {
     private Long id;
     private String comments;
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    private LocalDate createdAt = LocalDate.now();
     @Column(name = "updated_at")
-    private LocalDate updatedAt;
+    private LocalDate updatedAt = LocalDate.now();
 
     @ManyToOne
     @JoinColumn(name = "listing_id", insertable = false, updatable = false)
-    private List<Listing> listingUnpublished;
-
-    public UnpublishingRequest() {}
-
-    public UnpublishingRequest(Long id, String comments, LocalDate createdAt, LocalDate updatedAt) {
-        this.id = id;
-        this.comments = comments;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+    private Listing listingUnpublished;
 
     public Long getId() {
         return id;
@@ -61,4 +52,11 @@ public class UnpublishingRequest {
         this.updatedAt = updatedAt;
     }
 
+    public Listing getListingUnpublished() {
+        return listingUnpublished;
+    }
+
+    public void setListingUnpublished(Listing listingUnpublished) {
+        this.listingUnpublished = listingUnpublished;
+    }
 }
